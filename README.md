@@ -99,20 +99,12 @@ The final system is:
 
 ### Detailed documentation:
 
-- `ARCHITECTURE.md`
-- `RUNBOOK.md`
-- `TROUBLESHOOTING.md`
-- `PROJECT_PHASES.md`
-- `Skills Demonstrated`
-- `Linux system administration`
-- `Persistent NFS configuration`
-- `Data migration with rsync`
-- `Docker container lifecycle management`
-- `Log-based debugging`
-- `Network validation and capacity modeling`
-- `Storage redundancy planning`
-- `Risk mitigation and hardening`
-- `Infrastructure documentation`
+- `architecture-overview.md`
+- `architecture-office-media-topology.png`
+- `rsync-live-migration.md`
+- `nfs-mount-configuration.md`
+- `snapshot-retenttion-poolicy.md`
+- `troubleshooting-playbook.md`
 
 ## Future Improvements
 
