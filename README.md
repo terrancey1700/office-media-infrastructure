@@ -4,176 +4,126 @@ End-to-end small-business media infrastructure deployment using Ubuntu, Docker, 
 
 ---
 
-## Executive Summary
-### Situation
+# Executive Summary
+
+## Situation
 
 The office required a private, business-hosted media infrastructure capable of supporting 3–5 concurrent remote Plex users while maintaining network performance, redundancy, and scalability.
 
 Initial state:
 
-Media stored on local external disk
-
-No redundancy
-
-No snapshot protection
-
-Compute and storage tightly coupled
-
-No persistent network mount
-
-No production hardening
+- `Media stored on local external disk`
+- `No redundancy`
+- `No snapshot protection`
+- `Compute and storage tightly coupled`
+- `No persistent network mount`
+- `No production hardening`
 
 This created operational risk and limited scalability.
+
+---
 
 ### Task
 
 Design and deploy a production-stable infrastructure that:
 
-Separates compute and storage
+- `Separates compute and storage`
+- `Implements redundant storage (SHR)`
+- `Automates media acquisition`
+- `Enables secure remote access`
+- `Survives reboot`
+- `Is operationally documented`
 
-Implements redundant storage (SHR)
+---
 
-Automates media acquisition
+## Action
 
-Enables secure remote access
+### Phase 1 – Planning & Architecture
 
-Survives reboot
+- Designed UniFi-based network topology
+- Modeled ISP upload capacity for concurrent streaming
+- Selected Synology SHR (1-drive fault tolerance)
+- Designed arr-stack container architecture
+- Defined media and automation directory structure
 
-Is operationally documented
 
-### Action
+### Phase 2 – Deployment & Operationalization
 
-Phase 1 – Planning & Architecture
+- Installed Ubuntu Server on Lenovo ThinkCentre
+- Installed Docker and Docker Compose
+- Deployed arr-stack (Sonarr, Radarr, Prowlarr, qBittorrent, FlareSolverr, Plex)
+- Configured end-to-end automation pipeline
+- Installed Tailscale for secure overlay networking
+- Validated remote SSH and Plex access
 
-Designed UniFi-based network topology
+### Phase 3 – Migration, Persistence & Hardening
 
-Modeled ISP upload capacity for concurrent streaming
+- Mounted Synology via NFS
+- Migrated ~1.1TB using rsync with metadata preservation
+- Performed controlled cutover
+- Configured persistent mount in /etc/fstab
+- Verified mount survival across reboot
+- Enabled Snapshot Replication
+- Removed legacy external storage from production path
 
-Selected Synology SHR (1-drive fault tolerance)
 
-Designed arr-stack container architecture
-
-Defined media and automation directory structure
-
-Phase 2 – Deployment & Operationalization
-
-Installed Ubuntu Server on Lenovo ThinkCentre
-
-Installed Docker and Docker Compose
-
-Deployed arr-stack (Sonarr, Radarr, Prowlarr, qBittorrent, FlareSolverr, Plex)
-
-Configured end-to-end automation pipeline
-
-Installed Tailscale for secure overlay networking
-
-Validated remote SSH and Plex access
-
-Phase 3 – Migration, Persistence & Hardening
-
-Mounted Synology via NFS
-
-Migrated ~1.1TB using rsync with metadata preservation
-
-Performed controlled cutover
-
-Configured persistent mount in /etc/fstab
-
-Verified mount survival across reboot
-
-Enabled Snapshot Replication
-
-Removed legacy external storage from production path
-
-### Result
+## Result
 
 The final system is:
 
-Redundant (SHR fault tolerance)
+- `Redundant (SHR fault tolerance)`
+- `Persistent across reboots`
+- `Fully automated`
+- `Secure (no public port forwarding)`
+- `Remotely manageable`
+- `Architecturally separated`
+- `Production-stable`
 
-Persistent across reboots
 
-Fully automated
+## Technologies Used
 
-Secure (no public port forwarding)
+- Ubuntu Server 24.04
+- Docker & Docker Compose
+- Synology DSM (SHR)
+- NFS
+- rsync
+- tmux
+- Tailscale
+- UniFi Network Stack
+- Linux system tools (df, lsblk, mount, fstab)
 
-Remotely manageable
+## Architecture Overview
 
-Architecturally separated
+- User → Tailscale → Lenovo (Docker Host) → NFS → Synology (SHR Storage)
 
-Production-stable
 
-Technologies Used
+### Detailed documentation:
 
-Ubuntu Server 24.04
-
-Docker & Docker Compose
-
-Synology DSM (SHR)
-
-NFS
-
-rsync
-
-tmux
-
-Tailscale
-
-UniFi Network Stack
-
-Linux system tools (df, lsblk, mount, fstab)
-
-Architecture Overview
-
-User → Tailscale → Lenovo (Docker Host) → NFS → Synology (SHR Storage)
-
-Detailed documentation:
-
-ARCHITECTURE.md
-
-RUNBOOK.md
-
-TROUBLESHOOTING.md
-
-PROJECT_PHASES.md
-
-Skills Demonstrated
-
-Linux system administration
-
-Persistent NFS configuration
-
-Data migration with rsync
-
-Docker container lifecycle management
-
-Log-based debugging
-
-Network validation and capacity modeling
-
-Storage redundancy planning
-
-Risk mitigation and hardening
-
-Infrastructure documentation
+- `ARCHITECTURE.md`
+- `RUNBOOK.md`
+- `TROUBLESHOOTING.md`
+- `PROJECT_PHASES.md`
+- `Skills Demonstrated`
+- `Linux system administration`
+- `Persistent NFS configuration`
+- `Data migration with rsync`
+- `Docker container lifecycle management`
+- `Log-based debugging`
+- `Network validation and capacity modeling`
+- `Storage redundancy planning`
+- `Risk mitigation and hardening`
+- `Infrastructure documentation`
 
 ## Future Improvements
 
-Hyper Backup automation
-
-Offsite backup strategy
-
-Monitoring stack (Prometheus + Grafana)
-
-SSH key-only enforcement
-
-Firewall tightening
-
-UPS graceful shutdown integration
-
-Infrastructure automation via Ansible
-
-Replace README with full project documentation
+- Hyper Backup automation
+- Offsite backup strategy
+- Monitoring stack (Prometheus + Grafana)
+- SSH key-only enforcement
+- Firewall tightening
+- UPS graceful shutdown integration
+- Infrastructure automation via Ansible
+- Replace README with full project documentation
 
 
 ---
